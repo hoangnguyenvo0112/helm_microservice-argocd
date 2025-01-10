@@ -1,0 +1,69 @@
+name: Release Charts
+
+on:
+  push:
+
+env:
+  tag_prefix: v
+  crds_tag_prefix: crds_v
+
+jobs:
+  traefik:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Render changelog configuration
+        env:
+          REGEXP: "?!CRDs\-"
+        run: |
+          export DATE=$(date +%F); cat .github/workflows/changelog.json | envsubst > /tmp/changelog.json; cat /tmp/changelog.json
+
+      - name: Build Changelog
+        id: changelog
+        uses: mikepenz/release-changelog-builder-action@v5
+        with:
+          toTag: crds_v1.0.0
+          configuration: "/tmp/changelog.json"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: debug
+        run: |
+          cat <<EOF
+          ${{ steps.changelog.outputs.changelog }}
+          EOF
+
+  traefik-crds:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Render changelog configuration
+        env:
+          REGEXP: "CRDs"
+        run: |
+          export DATE=$(date +%F); cat .github/workflows/changelog.json | envsubst > /tmp/changelog.json; cat /tmp/changelog.json
+
+      - name: Build Changelog
+        id: changelog
+        uses: mikepenz/release-changelog-builder-action@v5
+        with:
+          toTag: crds_v1.0.0
+          configuration: "/tmp/changelog.json"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: debug
+        run: |
+          cat <<EOF
+          ${{ steps.changelog.outputs.changelog }}
+          EOF

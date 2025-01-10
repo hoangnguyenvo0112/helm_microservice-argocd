@@ -19,7 +19,7 @@ jobs:
 
       - name: Render changelog configuration
         env:
-          REGEXP: "?!CRDs\-"
+          REGEXP: "?!CRDs-"
         run: |
           export DATE=$(date +%F); cat .github/workflows/changelog.json | envsubst > /tmp/changelog.json; cat /tmp/changelog.json
 
@@ -27,7 +27,8 @@ jobs:
         id: changelog
         uses: mikepenz/release-changelog-builder-action@v5
         with:
-          toTag: crds_v1.0.0
+          toTag: feat/test
+          mode: "HYBRID"
           configuration: "/tmp/changelog.json"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -57,7 +58,8 @@ jobs:
         id: changelog
         uses: mikepenz/release-changelog-builder-action@v5
         with:
-          toTag: crds_v1.0.0
+          toTag: feat/test
+          mode: "HYBRID"
           configuration: "/tmp/changelog.json"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

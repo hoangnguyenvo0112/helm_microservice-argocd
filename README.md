@@ -95,7 +95,7 @@ See [here](./CONTRIBUTING.md#about-crds) for more details
 
 ```bash
 helm install traefik-crds traefik/traefik-crds
-helm install traefik traefik/traefik --skip-crds
+helm install traefik traefik/traefik --set crds.enabled="false"
 helm list # should display two charts installed
 ```
 

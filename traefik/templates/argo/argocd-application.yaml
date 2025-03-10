@@ -1,0 +1,25 @@
+{{- if .Values.argocd.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Values.argocd.namespace | default "argocd" }}
+spec:
+  project: {{ .Values.argocd.project | default "default" }}
+  source:
+    repoURL: {{ .Values.argocd.repoURL }}
+    targetRevision: {{ .Values.argocd.targetRevision | default "HEAD" }}
+    path: {{ .Values.argocd.path | default "charts/customer-support-panel-frontend" }}
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: {{ .Values.argocd.server | default "https://kubernetes.default.svc" }}
+    namespace: {{ .Release.Namespace }}
+  syncPolicy:
+    automated:
+      prune: {{ .Values.argocd.automated.prune | default false }}
+      selfHeal: {{ .Values.argocd.automated.selfHeal | default false }}
+    syncOptions:
+      - CreateNamespace=true
+{{- end }}

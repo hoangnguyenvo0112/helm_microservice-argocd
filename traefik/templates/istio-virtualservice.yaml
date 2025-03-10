@@ -1,0 +1,24 @@
+{{- if .Values.istio.enabled }}
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: {{ include "customer-support-panel-frontend.fullname" . }}
+  namespace: {{ include "customer-support-panel-frontend.namespace" . }}
+  annotations:
+    {{- toYaml .Values.istio.annotations | nindent 4 }}
+spec:
+  gateways:
+    {{- range .Values.istio.spec.gateways }}
+    - {{ . }}
+    {{- end }}
+  hosts:
+    {{- range .Values.istio.spec.hosts }}
+    - {{ . }}
+    {{- end }}
+  http:
+    - route:
+        - destination:
+            host: {{ include "customer-support-panel-frontend.fullname" . }}
+            port:
+              number: {{ .Values.service.ports.0.port }}
+{{- end }}

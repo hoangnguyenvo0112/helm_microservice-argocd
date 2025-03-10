@@ -1,32 +1,26 @@
 apiVersion: v2
-name: traefik
-description: A Traefik based Kubernetes ingress controller
+name: customer-support-panel-frontend
+description: A Helm chart for deploying Customer Support Panel Frontend
 type: application
-version: 34.4.1
-# renovate: image=traefik
-appVersion: v3.3.4
+version: 1.0.0
+# renovate: image=customer-support-panel-frontend
+appVersion: vi-prod-v0.0.44
 kubeVersion: ">=1.22.0-0"
 keywords:
-  - traefik
-  - ingress
-  - networking
-home: https://traefik.io/
+  - customer-support
+  - frontend
+  - web
+  - fintech
+home: https://fintech-farm.com/
 sources:
-  - https://github.com/traefik/traefik-helm-chart
-  - https://github.com/traefik/traefik
+  - https://github.com/fintech-farm/customer-support-panel-frontend
 maintainers:
-  - name: mloiseleur
-    email: michel.loiseleur@traefik.io
-  - name: charlie-haley
-    email: charlie.haley@traefik.io
-  - name: darkweaver87
-    email: remi.buisson@traefik.io
-  - name: jnoordsij
-icon: https://raw.githubusercontent.com/traefik/traefik/v2.3/docs/content/assets/img/traefik.logo.png
+  - name: Fintech Farm DevOps Team
+    email: devops@fintech-farm.com
+icon: https://fintech-farm.com/assets/logo.png
 annotations:
   artifacthub.io/changes: |
-    - "fix(Traefik Proxy): headerLabels does not exist for metrics.prometheus"
-    - "fix(Traefik Hub): add missing consulCatalogEnterprise provider"
-    - "feat(deps): update traefik docker tag to v3.3.4"
-    - "docs(Traefik Proxy): fix VALUES.md generation on prometheus values"
-    - "chore(release): 🚀 publish v34.4.1"
+    - "feat: Initial release of customer-support-panel-frontend"
+    - "fix: Updated default resource limits for improved stability"
+    - "docs: Added README with installation instructions"
+    - "chore: Improved templating for better customization"
